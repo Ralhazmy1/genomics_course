@@ -1,0 +1,21 @@
+---
+title: "index"
+author: "Raghid Alhazmy"
+date: "8/31/2020"
+output: html_document
+bibliography: references.bib
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+--------------------------
+
+[Lab 1](lab1_Raghid.html)
+
+[Lab 2](Lab-2.html)
+
+-------------------------
+Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
+
+# REFERENCES
