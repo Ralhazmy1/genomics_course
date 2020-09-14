@@ -1,0 +1,184 @@
+---
+title: "Lab3A"
+author: "Raghid Alhazmy"
+date: "9/7/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r eval=FALSE} 
+ download.file(url="https://ndownloader.figshare.com/files/2292169",
+              destfile = "data/portal_data_joined.csv")
+```
+
+eval=FALSE does not run the r block when kniting
+
+```{r}
+surveys <- read_csv("data/portal_data_joined.csv")
+```
+
+```{r}
+head(surveys)
+```
+
+shows the first 6 rows
+
+```{r eval=FALSE}
+view(surveys)
+```
+
+```{r}
+str(surveys)
+```
+
+```{r}
+dim(surveys)
+```
+
+```{r}
+summary(surveys)
+```
+
+### Challenge 1:
+What is the class of the object surveys?
+*tibble*
+
+How many rows and how many columns are in this object?
+*34786 rows and 13 columns*
+
+How many species have been recorded during these surveys?
+*48*
+<br />
+<br />
+<br />
+<br />
+<br />
+
+```{r}
+# first element in the first column of the data frame (as a vector)
+surveys[1, 1]   
+# first element in the 6th column (as a vector)
+surveys[1, 6]   
+# first column of the data frame (as a vector)
+surveys[, 1]    
+# first column of the data frame (as a data.frame)
+surveys[1]      
+# first three elements in the 7th column (as a vector)
+surveys[1:3, 7] 
+# the 3rd row of the data frame (as a data.frame)
+surveys[3, ]    
+# equivalent to head_surveys <- head(surveys)
+head_surveys <- surveys[1:6, ] 
+surveys[, -1]         
+# The whole data frame, except the first column
+surveys[-(7:34786), ] 
+# Equivalent to head(surveys)
+```
+
+```{r eval=FALSE}
+surveys["species_id"]       # Result is a data.frame
+surveys[, "species_id"]     # Result is a vector
+surveys[["species_id"]]     # Result is a vector
+surveys$species_id          # Result is a vector
+```
+
+### Challenge 2:
+```{r}
+surveyes_200 <- surveys[200, ]
+n_rows <- nrow(surveys)
+last <- surveys[n_rows, ]
+middle <- surveys[n_rows / 2, ]
+head <- surveys[-(7:n_rows), ]
+head
+```
+
+```{r}
+sex <- factor(c("male", "female", "female", "male"))
+levels(sex)
+nlevels(sex)
+```
+
+```{r}
+sex <- factor(sex, levels = c("male", "female"))
+levels(sex)
+```
+
+
+```{r}
+year_fct <- factor(c(1990, 1983, 1977, 1998, 1990))
+as.numeric(year_fct)
+as.numeric(as.character(year_fct))
+as.numeric(levels(year_fct))[year_fct]
+```
+We obtain all the factor levels using levels(year_fct)
+We convert these levels to numeric values using as.numeric(levels(year_fct))
+We then access these numeric values using the underlying integers of the vector year_fct inside the square brackets
+
+
+```{r}
+plot(as.factor(surveys$sex))
+```
+
+```{r}
+sex <- factor(surveys$sex)
+head(sex)
+levels(sex)[3] <- "undetermined"
+levels(sex)
+head(sex)
+```
+
+### Challenge 3:
+```{r}
+levels(sex)[2:3] <- c("female", "male")
+sex <- factor(sex, levels = c("female", "male", "undetermined"))
+plot(sex)
+```
+
+```{r}
+surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = TRUE)
+str(surveys)
+surveys <- read.csv("data/portal_data_joined.csv", stringsAsFactors = FALSE)
+str(surveys)
+```
+
+
+### Challenge 4:
+```{r}
+animal_data <- data.frame(
+          animal = c("dog", "cat", "sea cucumber", "sea urchin"),
+          feel = c("furry", "furry", "squishy", "spiny"),
+          weight = c(45, 8, 1.1, 0.8)
+          )
+
+country_climate <- data.frame(
+       country = c("Canada", "Panama", "South Africa", "Australia"),
+       climate = c("cold", "hot", "temperate", "hot/temperate"),
+       temperature = c(10, 30, 18, 15),
+       northern_hemisphere = c(TRUE, TRUE, FALSE, FALSE),
+       has_kangaroo = c(FALSE, FALSE, FALSE, TRUE)
+       )
+```
+
+```{r}
+library("lubridate")
+
+my_date <- ymd("2015-01-01")
+str(my_date)
+
+my_date <- ymd(paste("2015", "1", "1", sep = "-")) 
+str(my_date)
+```
+
+```{r eval=FALSE}
+paste(surveys$year, surveys$month, surveys$day, sep = "-")
+ymd(paste(surveys$year, surveys$month, surveys$day, sep = "-"))
+```
+
+
