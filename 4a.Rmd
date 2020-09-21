@@ -1,0 +1,84 @@
+---
+title: "4a"
+author: "Raghid Alhazmy"
+date: "9/20/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+surveys <- read_csv("data/portal_data_joined.csv")
+
+surveys_complete <- surveys %>%
+  filter(!is.na(weight),
+         !is.na(hindfoot_length),
+         !is.na(sex))
+
+## Extract the most common species_id
+species_counts <- surveys_complete %>%
+    count(species_id) %>% 
+    filter(n >= 50)
+
+## Only keep the most common species
+surveys_complete <- surveys_complete %>%
+  filter(species_id %in% species_counts$species_id)
+```
+
+
+To build a ggplot, we will use the following basic template that can be used for different types of plots:
+ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +  <GEOM_FUNCTION>()
+
+```{r}
+surveys_plot <- ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length))
+
+surveys_plot + geom_point()
+```
+
+### Challenge 1:
+```{r eval=FALSE}
+install.packages("hexbin")
+library("hexbin")
+```
+```{r}
+surveys_plot +
+ geom_hex()
+```
+
+
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = weight, y = hindfoot_length)) +
+    geom_point(alpha = 0.1, aes(color = species_id))
+```
+
+### Challenge 2:
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) + geom_point(aes(color = plot_type))
+```
+
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+    geom_boxplot()
+
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+    geom_boxplot(alpha = 0) +
+    geom_jitter(alpha = 0.3, color = "tomato")
+```
+
+### Challenge 3:
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = weight)) +
+    geom_violin() + scale_y_log10()
+```
+
+```{r}
+ggplot(data = surveys_complete, mapping = aes(x = species_id, y = hindfoot_length)) +
+    geom_boxplot(aes(color =plot_type)) + geom_violin()
+```
+

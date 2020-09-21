@@ -19,7 +19,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Lab 3B](Lab3B.html)
 
-
+[Lab 4](Lab4.html)
+[4a](4a.html)
 -------------------------
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 

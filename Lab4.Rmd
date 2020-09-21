@@ -1,0 +1,119 @@
+---
+title: "Lab4"
+author: "Raghid Alhazmy"
+date: "9/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+report_03_11_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-11-2020.csv")) %>%
+  rename(Country_Region = "Country/Region", Province_State = "Province/State")
+
+str(report_03_11_2020)
+```
+
+```{r}
+View(report_03_11_2020)
+```
+
+```{r eval=FALSE}
+install.packages('DT')
+```
+
+
+```{r}
+library(DT)
+datatable(report_03_11_2020)
+```
+
+```{r}
+report_03_12_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-12-2020.csv"))
+str(report_03_12_2020)
+
+report_09_12_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/09-12-2020.csv"))
+str(report_09_12_2020)
+```
+
+```{r}
+str(report_03_12_2020)
+view(report_03_12_2020)
+
+str(report_09_12_2020)
+view(report_09_12_2020)
+```
+
+
+### Exercise 1
+```{r}
+report_03_12_2020 %>% 
+  group_by(`Country/Region`) %>% 
+  summarise(sum(`Confirmed`))
+
+
+report_09_12_2020 %>% 
+  group_by(`Country_Region`) %>% 
+  summarise(sum(`Confirmed`))
+```
+
+```{r}
+report_03_12_2020 %>% 
+  group_by(`Country/Region`,`Province/State`) %>% 
+  summarise(sum(`Confirmed`)) %>% 
+  filter(`Country/Region`=='US')
+
+
+report_09_12_2020 %>% 
+  group_by(`Country_Region`,`Province_State`) %>% 
+  summarise(sum(`Confirmed`)) %>% 
+  filter(`Country_Region`=='US')
+```
+
+```{r}
+report_03_12_2020 %>% 
+  group_by(`Country/Region`) %>% 
+  summarise(TotDeaths = sum(`Deaths`)) %>% 
+  arrange(desc(TotDeaths)) %>% 
+  slice(1:10)
+
+
+report_09_12_2020 %>% 
+  group_by(`Country_Region`) %>% 
+   summarise(TotDeaths = sum(`Deaths`)) %>% 
+  arrange(desc(TotDeaths)) %>% 
+  slice(1:10)
+  
+  
+```
+
+
+### Exercise 2
+```{r}
+Deaths312<-report_03_12_2020 %>% 
+  group_by(`Country/Region`) %>% 
+  summarise(TotDeaths = sum(`Deaths`)) %>% 
+  arrange(desc(TotDeaths)) %>% 
+  slice(1:10)
+
+ggplot(data = Deaths312, mapping = aes(x = `Country/Region`, y = `Deaths`)) +
+    geom_point()
+
+
+
+Deaths912<-report_09_12_2020 %>% 
+  group_by(`Country_Region`) %>% 
+   summarise(TotDeaths = sum(`Deaths`)) %>% 
+  arrange(desc(TotDeaths)) %>% 
+  slice(1:10)
+
+ggplot(data = Deaths912, mapping = aes(x = `Country/Region`, y = `Deaths`)) +
+    geom_point()
+```
+
