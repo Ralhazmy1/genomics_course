@@ -20,7 +20,7 @@ report_03_11_2020 <-   read_csv(url("https://raw.githubusercontent.com/CSSEGISan
 str(report_03_11_2020)
 ```
 
-```{r}
+```{r eval=FALSE}
 View(report_03_11_2020)
 ```
 
@@ -94,26 +94,65 @@ report_09_12_2020 %>%
 ```
 
 
+
 ### Exercise 2
 ```{r}
-Deaths312<-report_03_12_2020 %>% 
+report_03_12_2020 %>% 
   group_by(`Country/Region`) %>% 
   summarise(TotDeaths = sum(`Deaths`)) %>% 
   arrange(desc(TotDeaths)) %>% 
-  slice(1:10)
-
-ggplot(data = Deaths312, mapping = aes(x = `Country/Region`, y = `Deaths`)) +
+  slice(1:10) %>% 
+  ggplot(mapping = aes(x = `Country/Region`, y = `TotDeaths`)) +
     geom_point()
 
 
 
-Deaths912<-report_09_12_2020 %>% 
+report_09_12_2020 %>% 
   group_by(`Country_Region`) %>% 
-   summarise(TotDeaths = sum(`Deaths`)) %>% 
+  summarise(TotDeaths = sum(`Deaths`)) %>% 
   arrange(desc(TotDeaths)) %>% 
-  slice(1:10)
-
-ggplot(data = Deaths912, mapping = aes(x = `Country/Region`, y = `Deaths`)) +
+  slice(1:10) %>% 
+  ggplot(mapping = aes(x = `Country_Region`, y = `TotDeaths`)) +
     geom_point()
+```
+
+```{r}
+report_03_12_2020 %>% 
+  group_by(`Country/Region`,`Province/State`) %>% 
+  summarise(TotConfirmed = sum(`Confirmed`)) %>% 
+  filter(`Country/Region`=='US') %>% 
+  arrange(desc(TotConfirmed)) %>% 
+  slice(1:10) %>% 
+  ggplot(mapping = aes(x = `TotConfirmed`,  y = `Province/State`)) + 
+    geom_bar(stat = 'identity')
+
+report_03_12_2020 %>% 
+  group_by(`Country/Region`,`Province/State`) %>% 
+  summarise(TotDeaths = sum(`Deaths`)) %>% 
+  filter(`Country/Region`=='US') %>% 
+  arrange(desc(TotDeaths)) %>% 
+  slice(1:10) %>% 
+  ggplot(mapping = aes(x = `TotDeaths`,  y = `Province/State`)) + 
+    geom_bar(stat = 'identity')
+
+
+
+report_09_12_2020 %>% 
+  group_by(`Country_Region`,`Province_State`) %>% 
+  summarise(TotConfirmed = sum(`Confirmed`)) %>% 
+  filter(`Country_Region`=='US') %>% 
+  arrange(desc(TotConfirmed)) %>% 
+  slice(1:10) %>% 
+  ggplot(mapping = aes(x = `TotConfirmed`,  y = `Province_State`)) + 
+    geom_bar(stat = 'identity')
+
+report_09_12_2020 %>% 
+  group_by(`Country_Region`,`Province_State`) %>% 
+  summarise(TotDeaths = sum(`Deaths`)) %>% 
+  filter(`Country_Region`=='US') %>% 
+  arrange(desc(TotDeaths)) %>% 
+  slice(1:10) %>% 
+  ggplot(mapping = aes(x = `TotDeaths`,  y = `Province_State`)) + 
+    geom_bar(stat = 'identity')
 ```
 
