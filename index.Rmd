@@ -20,7 +20,9 @@ knitr::opts_chunk$set(echo = TRUE)
 [Lab 3B](Lab3B.html)
 
 [Lab 4](Lab4.html) /
-[4a](4a.html)
+[Visualizing Data turotial](4a.html)
+
+[Lab 5](Lab5.html)
 
 
 -------------------------
