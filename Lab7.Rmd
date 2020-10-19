@@ -1,0 +1,30 @@
+---
+title: "Lab7"
+author: "Raghid Alhazmy"
+date: "10/12/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, eval=FALSE}
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install(version = "3.11")
+```
+
+```{r, eval=FALSE}
+BiocManager::install("rnaseqGene")
+
+BiocManager::install("airway")
+BiocManager::install("tximeta")
+BiocManager::install("DESeq2")
+BiocManager::install("Gviz")
+BiocManager::install("sva")
+BiocManager::install("RUVSeq")
+BiocManager::install("fission")
+```
+
+### Not done

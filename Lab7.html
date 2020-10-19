@@ -11,8 +11,9 @@
 
 <meta name="author" content="Raghid Alhazmy" />
 
+<meta name="date" content="2020-10-12" />
 
-<title>index</title>
+<title>Lab7</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -384,34 +385,27 @@ summary {
 
 
 
-<h1 class="title toc-ignore">index</h1>
+<h1 class="title toc-ignore">Lab7</h1>
 <h4 class="author">Raghid Alhazmy</h4>
-<h4 class="date">8/31/2020</h4>
+<h4 class="date">10/12/2020</h4>
 
 </div>
 
 
-<hr />
-<p><a href="lab1_Raghid.html">Lab 1</a></p>
-<p><a href="Lab-2.html">Lab 2</a></p>
-<p><a href="Lab3A.html">Lab 3A</a></p>
-<p><a href="Lab3B.html">Lab 3B</a></p>
-<p><a href="Lab4.html">Lab 4</a> / <a href="4a.html">Visualizing Data turotial</a></p>
-<p><a href="Lab5.html">Lab 5</a></p>
-<p><a href="Lab6.html">Lab 6</a></p>
-<p><a href="Lab7.html">Lab 7</a></p>
-<hr />
-<p>Application written in R <span class="citation">(R Core Team 2015)</span> using the Shiny framework <span class="citation">(Chang et al. 2015)</span>.</p>
-<div id="references" class="section level1 unnumbered">
-<h1 class="unnumbered">REFERENCES</h1>
-<div id="refs" class="references hanging-indent">
-<div id="ref-Chang2015">
-<p>Chang, W., J. Cheng, JJ. Allaire, Y. Xie, and J. McPherson. 2015. “Shiny: Web Application Framework for R. R Package Version 0.12.1.” Computer Program. <a href="http://CRAN.R-project.org/package=shiny">http://CRAN.R-project.org/package=shiny</a>.</p>
-</div>
-<div id="ref-RCoreTeam">
-<p>R Core Team. 2015. “R: A Language and Environment for Statistical Computing.” Journal Article. <a href="http://www.R-project.org">http://www.R-project.org</a>.</p>
-</div>
-</div>
+<pre class="r"><code>if (!requireNamespace(&quot;BiocManager&quot;, quietly = TRUE))
+    install.packages(&quot;BiocManager&quot;)
+BiocManager::install(version = &quot;3.11&quot;)</code></pre>
+<pre class="r"><code>BiocManager::install(&quot;rnaseqGene&quot;)
+
+BiocManager::install(&quot;airway&quot;)
+BiocManager::install(&quot;tximeta&quot;)
+BiocManager::install(&quot;DESeq2&quot;)
+BiocManager::install(&quot;Gviz&quot;)
+BiocManager::install(&quot;sva&quot;)
+BiocManager::install(&quot;RUVSeq&quot;)
+BiocManager::install(&quot;fission&quot;)</code></pre>
+<div id="not-done" class="section level3">
+<h3>Not done</h3>
 </div>
 
 
