@@ -9,3 +9,26 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+# NGPhylogeny.fr
+###1.Takes in multiple sequences to evaluate
+###2.Align these sequences so that distance is calculated between said sequences
+###3.Determine the relationship between the sequences
+###4.Finally, visualize these relationships
+![NGPhylogeny.fr tree](tree.png)
+
+```{r}
+BiocManager::install("ggtree")
+```
+
+
+```{r}
+library(tidyverse)
+library(ggtree)
+# added treeio and ggimage library
+library(treeio)
+library(ggimage)
+# need to install libmagick 
+#sudo apt-get install libmagick++-dev
+```
+

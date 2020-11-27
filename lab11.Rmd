@@ -1,0 +1,10 @@
+---
+title: "Lab11"
+author: "Raghid Alhazmy"
+date: "11/16/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
