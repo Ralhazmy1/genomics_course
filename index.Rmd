@@ -36,6 +36,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 [Lab 11](Lab11.html)
 
+[Lab 12](lab12.html)
+
+[Lab 13](lab13.html)
+
 -------------------------
 Application written in R [@RCoreTeam] using the Shiny framework [@Chang2015].
 

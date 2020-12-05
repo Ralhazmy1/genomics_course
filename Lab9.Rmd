@@ -9,3 +9,329 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+library(stringr)
+library(tidyverse)
+```
+
+```{r}
+x <- c("wheel", "feel", "water")
+str_view(x, "ee")
+```
+```{r}
+str_view(x, ".e.")
+```
+```{r}
+# To create the regular expression, we need \\
+dot <- "\\."
+
+# But the expression itself only contains one:
+writeLines(dot)
+```
+```{r}
+# And this tells R to look for an explicit .
+x <- c("abc", "a.c", "bef")
+str_view(x, "a\\.c")
+```
+```{r}
+x <- "a\\b"
+writeLines(x)
+```
+```{r}
+str_view(x, "\\\\")
+```
+## 14.3.1.1 Exercises
+####1. 4 \\\\ are required to use '\' as an escape character. the first two \\ are used to create a regulare expression, and another \ to make it a string.
+####2. x <- ""'\"  str_view(x, "\"'\\\\")
+####3. x<-"1.2.3.4.5"    str_view(x, "\..\..\..")     .2.3.4
+
+```{r}
+x <- c("apple", "banana", "pear")
+str_view(x, "^a")
+```
+```{r}
+str_view(x, "a$")
+```
+
+```{r}
+x <- c("apple pie", "apple", "apple cake")
+str_view(x, "^apple$")
+```
+
+##14.3.2.1 Exercises
+
+```{r}
+#1.
+x <- c("$^$")
+str_view(x, "\\$\\^\\$")
+```
+
+```{r, eval=FALSE}
+#2.
+str_view(stringr::words, "^y")
+str_view(stringr::words, "x$")
+str_view(stringr::words, "^...$")
+str_view(stringr::words, ".......")
+```
+
+```{r}
+x <- c("abc", "a.c", "a*c", "a c")
+str_view(x, "a[.]c")
+```
+```{r}
+str_view(x, ".[*]c")
+```
+```{r}
+str_view(x, "a[ ]")
+```
+```{r}
+x <- c("grey", "gray")
+str_view(x, "gr(e|a)y")
+```
+##14.3.3.1 Exercises
+```{r, eval=FALSE}
+#1.
+w<-stringr::words
+str_view(w, "^[aeiou]")
+str_view(w, "[aeiou]", match = FALSE)
+str_view(w, "[^e]ed$")
+str_view(w, "ing$|ise$")
+```
+```{r, eval=FALSE}
+#2.
+str_view(w, "ie|[^c]ei")
+```
+```{r, eval=FALSE}
+#3.
+str_view(w, "q[^u]")
+```
+```{r, eval=FALSE}
+#4.
+str_view(w, "ou")
+```
+
+```{r}
+x <- "1888 is the longest year in Roman numerals: MDCCCLXXXVIII"
+str_view(x, "CC?")
+```
+```{r}
+str_view(x, "CC+")
+```
+```{r}
+str_view(x, 'C[LX]+')
+```
+
+{n}: exactly n
+{n,}: n or more
+{,m}: at most m
+{n,m}: between n and m
+
+##14.3.4.1 Exercises
+####1. ? = {0,1}  + = {1,}  * = {0,}
+####2. ^.*$ will match with anything    \\{.+\\} will match with anything inside{}    \d{4}-\d{2}-\d{2} will match with ####-##-##    \\\\{4} will match with 8 \ ex. \\\\\\\\
+```{r, eval=FALSE}
+#3.
+str_view(w, "^[aeiou]{3}")
+str_view(w, "[aeiou]{3,}")
+str_view(w, "([aeiou][^aeiou]){2,}")
+```
+
+##14.3.5.1 Exercises
+####1. (.)\1\1 macthes a repeating character    (.)(.)\\2\\1 matches a pair of characters foloowed by the reverse of those characters   (..)\1 matches with a repeating pair of characters    (.).\\1.\\1 matches with ex. abaca repeating the original character and any character in between.   (.)(.)(.).*\\3\\2\\1  matches with three characters, then any number of charcters, then the original three characters in reverse order.
+```{r, eval=FALSE}
+#2.
+str_view(w, "(.).*\1")
+str_view(w, "(.)(.).*\1\2")
+str_view(w, "(.).*\1.*\1.*")
+```
+
+```{r}
+x <- c("apple", "banana", "pear")
+str_detect(x, "e")
+```
+```{r}
+# How many common words start with t?
+sum(str_detect(words, "^t"))
+```
+```{r}
+# What proportion of common words end with a vowel?
+mean(str_detect(words, "[aeiou]$"))
+```
+```{r}
+# Find all words containing at least one vowel, and negate
+no_vowels_1 <- !str_detect(words, "[aeiou]")
+# Find all words consisting only of consonants (non-vowels)
+no_vowels_2 <- str_detect(words, "^[^aeiou]+$")
+identical(no_vowels_1, no_vowels_2)
+```
+```{r}
+words[str_detect(words, "x$")]
+str_subset(words, "x$")
+```
+```{r}
+x <- c("apple", "banana", "pear")
+str_count(x, "a")
+```
+
+```{r}
+# On average, how many vowels per word?
+mean(str_count(words, "[aeiou]"))
+```
+
+##14.4.1.1 Exercises
+```{r}
+#1.
+words[str_detect(words, "^x|x$")]
+
+xstart <- str_detect(words, "^x")
+xlast <- str_detect(words, "x$")
+words[xstart | xlast]
+```
+```{r}
+#2.
+str_subset(words, "^[aeiou].*[^aeiou]$")
+
+vowelstart <- str_detect(words, "^[aeiou]")
+con_end <- str_detect(words, "[^aeiou]$")
+words[vowelstart & con_end]
+```
+
+```{r}
+colours <- c("red", "orange", "yellow", "green", "blue", "purple")
+colour_match <- str_c(colours, collapse = "|")
+colour_match
+
+has_colour <- str_subset(sentences, colour_match)
+matches <- str_extract(has_colour, colour_match)
+head(matches)
+```
+
+```{r}
+more <- sentences[str_count(sentences, colour_match) > 1]
+str_view_all(more, colour_match)
+```
+
+##14.4.2.1 Exercises
+```{r}
+#1.
+colour_match2 <- str_c("\\b(", str_c(colours, collapse = "|"), ")\\b")
+colour_match2
+
+more2 <- sentences[str_count(sentences, colour_match) > 1]
+str_view_all(more2, colour_match2)
+```
+```{r}
+#2.
+str_extract(sentences, "[A-ZAa-z]+") %>% head()
+
+pattern <- "\\b[A-Za-z]+ing\\b"
+sentences_with_ing <- str_detect(sentences, pattern)
+unique(unlist(str_extract_all(sentences[sentences_with_ing], pattern)))
+
+unique(unlist(str_extract_all(sentences, "\\b[A-Za-z]{3,}s\\b")))
+```
+
+```{r}
+noun <- "(a|the) ([^ ]+)"
+
+has_noun <- sentences %>%
+  str_subset(noun) %>%
+  head(10)
+has_noun %>% 
+  str_extract(noun)
+```
+```{r}
+has_noun %>% 
+  str_match(noun)
+```
+
+```{r}
+tibble(sentence = sentences) %>% 
+  tidyr::extract(
+    sentence, c("article", "noun"), "(a|the) ([^ ]+)", 
+    remove = FALSE
+  )
+```
+
+##14.4.3.1 Exercises
+```{r}
+#1.
+numbers <- "\\b(one|two|three|four|five|six|seven|eight|nine|ten) +(\\w+)"
+sentences[str_detect(sentences, numbers)] %>%
+  str_extract(numbers)
+```
+```{r}
+#2.
+contraction <- "([A-Za-z]+)'([A-Za-z]+)"
+sentences[str_detect(sentences, contraction)] %>%
+  str_extract(contraction) %>%
+  str_split("'")
+```
+
+```{r}
+x <- c("apple", "pear", "banana")
+str_replace(x, "[aeiou]", "-")
+str_replace_all(x, "[aeiou]", "-")
+```
+
+```{r}
+x <- c("1 house", "2 cars", "3 people")
+str_replace_all(x, c("1" = "one", "2" = "two", "3" = "three"))
+```
+
+##14.4.4.1 Exercises
+```{r}
+#1.
+str_replace_all("one/two/three/four", "/", "\\\\")
+```
+```{r}
+#2.
+replacements <- c("A" = "a", "B" = "b", "C" = "c", "D" = "d", "E" = "e",
+                  "F" = "f", "G" = "g", "H" = "h", "I" = "i", "J" = "j", 
+                  "K" = "k", "L" = "l", "M" = "m", "N" = "n", "O" = "o", 
+                  "P" = "p", "Q" = "q", "R" = "r", "S" = "s", "T" = "t", 
+                  "U" = "u", "V" = "v", "W" = "w", "X" = "x", "Y" = "y", 
+                  "Z" = "z")
+lower_words <- str_replace_all(words, pattern = replacements)
+```
+```{r}
+#3.
+str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
+```
+
+```{r}
+sentences %>%
+  head(5) %>% 
+  str_split(" ")
+```
+```{r}
+"a|b|c|d" %>% 
+  str_split("\\|") %>% 
+  .[[1]]
+```
+```{r}
+sentences %>%
+  head(5) %>% 
+  str_split(" ", simplify = TRUE)
+```
+```{r}
+fields <- c("Name: Hadley", "Country: NZ", "Age: 35")
+fields %>% str_split(": ", n = 2, simplify = TRUE)
+```
+```{r}
+x <- "This is a sentence.  This is another sentence."
+str_view_all(x, boundary("word"))
+```
+```{r}
+str_split(x, " ")[[1]]
+```
+```{r}
+str_split(x, boundary("word"))[[1]]
+```
+
+##14.4.5.1 Exercises
+```{r}
+x <- c("apples, pears, and bananas")
+str_split(x, ", +(and +)?")[[1]]
+```
+

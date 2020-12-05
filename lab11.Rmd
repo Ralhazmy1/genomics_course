@@ -8,3 +8,9 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+```{r, eval=FALSE}
+BiocManager::install("phyloseq")
+BiocManager::install("dada2")
+BiocManager::install("DECIPHER")
+```
+
