@@ -17,17 +17,14 @@ knitr::opts_chunk$set(echo = TRUE)
 ###4.Finally, visualize these relationships
 ![NGPhylogeny.fr tree](tree.png)
 
-```{r}
+```{r, eval=FALSE}
 BiocManager::install("ggtree")
 ```
 
 
 ```{r}
 library(tidyverse)
-library(ggtree)
 # added treeio and ggimage library
-library(treeio)
-library(ggimage)
 # need to install libmagick 
 #sudo apt-get install libmagick++-dev
 ```
